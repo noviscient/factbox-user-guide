@@ -74,3 +74,18 @@ The data for this chart will be pre-calculated based on the provided return data
 
 - **Top N Drawdowns** - Number of drawdown periods to display.
 - **Start, End Date** - Set the date range for the displayed data.
+
+### Expected Shortfall
+
+Represents the expected shortfall risk associated with the returns data.
+
+The data for this chart will be pre-calculated based on the provided return data.
+
+![Expected Shortfall widget](../images/widgets/SCR-20250506-lqnz.png)
+
+#### Widget Options
+
+<img src="../images/widgets/SCR-20250506-lskv.png" alt="Expected Shortfall options" width="25%"/>
+
+- **Confidence Level** - The probability that losses will not exceed the expected shortfall threshold. For example, a 95% confidence level means there is a 5% chance that losses will exceed the calculated expected shortfall.
+- **Start, End Date** - Defines the time range over which the expected shortfall is calculated, based on the provided return data.
