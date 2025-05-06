@@ -40,7 +40,9 @@ The data for this chart will be pre-calculated based on the provided return data
 
 #### Options
 
-![Cumulative Performance Chart widget options](../images/widgets/SCR-20250506-cyaz.png)
+<!-- ![Cumulative Performance Chart widget options](../images/widgets/SCR-20250506-cyaz.png) -->
+<img src="../images/widgets/SCR-20250506-cyaz.png" alt="Cumulative Performance Chart widget options" width="400"/>
+
 
 **Benchmarks** - Select a benchmark from the list.
 **Start, End Date** - Set the date range for the displayed data.
