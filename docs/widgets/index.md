@@ -30,3 +30,18 @@ Upload time series data in CSV format.
 
 ## Performance Analytics
 
+### Cumulative Performance Chart
+
+The cumulative performance of an investment represents the total percentage change in the asset’s price over a specific period.
+
+The data for this chart will be pre-calculated based on the provided return data.
+
+![Cumulative Performance Chart widget](./images/widgets/SCR-20250506-cwyt.png)
+
+#### Options
+
+![Cumulative Performance Chart widget options](./images/widgets/SCR-20250506-cyaz.png)
+
+**Benchmarks** - Select a benchmark from the list.
+**Start, End Date** - Set the date range for the displayed data.
+
