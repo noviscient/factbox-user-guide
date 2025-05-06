@@ -47,15 +47,30 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ### Distribution of Monthly Returns
 
-The table displays the number of months in which a portfolio's monthly performance historically has fallen within varying performance increments.
+The chart displays the number of months in which a portfolio's monthly performance historically has fallen within varying performance increments.
 
 The data for this chart will be pre-calculated based on the provided return data.
 
-![Cumulative Performance Chart widget](../images/widgets/SCR-20250506-lgdf.png)
+![Distribution of Monthly Returns widget](../images/widgets/SCR-20250506-lgdf.png)
 
 #### Widget Options
 
-<img src="../images/widgets/SCR-20250506-lhax.png" alt="Cumulative Performance Chart widget options" width="25%"/>
+<img src="../images/widgets/SCR-20250506-lhax.png" alt="Distribution of Monthly Returns widget options" width="25%"/>
 
 - **Benchmarks** - Select a benchmark from the list.
+- **Start, End Date** - Set the date range for the displayed data.
+
+### Drawdown Report
+
+A drawdown is defined as a loss of equity from a peak to a trough within a single month or over a consecutive period of months.
+
+The data for this chart will be pre-calculated based on the provided return data.
+
+![Drawdown Report Table widget](../images/widgets/SCR-20250506-lmlr.png)
+
+#### Widget Options
+
+<img src="../images/widgets/SCR-20250506-lmuw.png" alt="Drawdown Report widget options" width="25%"/>
+
+- **Top N Drawdowns** - Number of drawdown periods to display.
 - **Start, End Date** - Set the date range for the displayed data.
