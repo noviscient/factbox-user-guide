@@ -38,12 +38,24 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ![Cumulative Performance Chart widget](../images/widgets/SCR-20250506-cwyt.png)
 
-#### Options
+#### Widget Options
 
-<!-- ![Cumulative Performance Chart widget options](../images/widgets/SCR-20250506-cyaz.png) -->
-<img src="../images/widgets/SCR-20250506-cyaz.png" alt="Cumulative Performance Chart widget options" width="400"/>
+<img src="../images/widgets/SCR-20250506-cyaz.png" alt="Cumulative Performance Chart widget options" width="25%"/>
 
+- **Benchmarks** - Select a benchmark from the list.
+- **Start, End Date** - Set the date range for the displayed data.
 
-**Benchmarks** - Select a benchmark from the list.
-**Start, End Date** - Set the date range for the displayed data.
+### Distribution of Monthly Returns
 
+The table displays the number of months in which a portfolio's monthly performance historically has fallen within varying performance increments.
+
+The data for this chart will be pre-calculated based on the provided return data.
+
+![Cumulative Performance Chart widget](../images/widgets/SCR-20250506-lgdf.png)
+
+#### Widget Options
+
+<img src="../images/widgets/SCR-20250506-lhax.png" alt="Cumulative Performance Chart widget options" width="25%"/>
+
+- **Benchmarks** - Select a benchmark from the list.
+- **Start, End Date** - Set the date range for the displayed data.
