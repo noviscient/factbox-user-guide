@@ -100,6 +100,22 @@ The data for this chart will be pre-calculated based on the provided return data
 
 #### Widget Options
 
-<img src="../images/widgets/SCR-20250506-uglz.png" alt="Expected Shortfall options" width="25%"/>
+<img src="../images/widgets/SCR-20250506-uglz.png" alt="Historical Performance Table options" width="25%"/>
 
 - **Start, End Date** - Sets the period for displaying historical performance metrics based on available return data.
+
+### Performance and Risk Metrics
+
+Performance and risk metrics are widely used to evaluate the performance of a portfolio, and forms a major component of portfolio management.
+
+The data for this chart will be pre-calculated based on the provided return data.
+
+![Performance and Risk Metrics widget](../images/widgets/SCR-20250506-uhys.png)
+
+#### Widget Options
+
+<img src="../images/widgets/SCR-20250506-ujba.png" alt="Performance and Risk Metrics options" width="25%"/>
+
+-**Benchmarks** - Compare performance metrics against selected benchmarks. Multiple selections allowed.
+-**Prinmary Benchmark** - The main benchmark used for comparison.
+- **Start, End Date** - Sets the time period for displaying historical performance metrics based on the available return data.
