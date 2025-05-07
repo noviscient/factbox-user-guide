@@ -89,3 +89,17 @@ The data for this chart will be pre-calculated based on the provided return data
 
 - **Confidence Level** - The probability that losses will not exceed the expected shortfall threshold. For example, a 95% confidence level means there is a 5% chance that losses will exceed the calculated expected shortfall.
 - **Start, End Date** - Defines the time range over which the expected shortfall is calculated, based on the provided return data.
+
+### Historical Performance Table
+
+Analyzing historical performance data cah help you identify trends, by comparing historical data, you can spot upward and downward performance trends.
+
+The data for this chart will be pre-calculated based on the provided return data.
+
+![Historical Performance Table widget](../images/widgets/SCR-20250506-ufnn.png)
+
+#### Widget Options
+
+<img src="../images/widgets/SCR-20250506-uglz.png" alt="Expected Shortfall options" width="25%"/>
+
+- **Start, End Date** - Sets the period for displaying historical performance metrics based on available return data.
