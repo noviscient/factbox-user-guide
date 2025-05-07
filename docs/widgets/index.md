@@ -119,3 +119,17 @@ The data for this chart will be pre-calculated based on the provided return data
 -**Benchmarks** - Compare performance metrics against selected benchmarks. Multiple selections allowed.
 -**Prinmary Benchmark** - The main benchmark used for comparison.
 - **Start, End Date** - Sets the time period for displaying historical performance metrics based on the available return data.
+
+### Return Report
+
+The return report represents best, worst, average, median and last returns of different rolling period.
+
+The data for this chart will be pre-calculated based on the provided return data.
+
+![Performance and Risk Metrics widget](../images/widgets/SCR-20250506-urbb.png)
+
+#### Widget Options
+
+<img src="../images/widgets/SCR-20250506-bals.png" alt="Return Report options" width="25%"/>
+
+- **Start, End Date** - Defines the time window used to calculate and display rolling period return statistics.
