@@ -130,6 +130,57 @@ The data for this chart will be pre-calculated based on the provided return data
 
 #### Widget Options
 
-<img src="../images/widgets/SCR-20250506-bals.png" alt="Return Report options" width="25%"/>
+<img src="../images/widgets/SCR-20250507-bals.png" alt="Return Report options" width="25%"/>
 
+- **Start, End Date** - Defines the time window used to calculate and display rolling period return statistics.
+
+### Return Statistics
+
+Return statistics show statistical measures for the return data provided.
+
+- **CAGR** - Compound Annual Growth Rate; the annualized rate of return assuming profits are reinvested over the period.
+- **3 Month ROR** - Return on investment over the last 3 months, showing short-term performance.
+- **6 Month ROR** - Return over the past 6 months, capturing medium-term performance trends.
+- **1 Year ROR** - Return over the last 12 months, indicating recent yearly performance.
+- **3 Year ROR** - Cumulative return over the past 3 years, useful for evaluating longer-term results.
+- **Year to Date ROR** - Return from the beginning of the calendar year up to the current date.
+- **Total Return** -  The overall return over the entire period, including both capital gains and income.
+- **Winning Month** - The percentage of months with positive returns during the evaluated period.
+- **Avg Winning Month** - The average return in months where the performance was positive.
+- **Avg Losing Month** - The average return in months where the performance was negative.
+
+The data for this widget will be pre-calculated based on the provided return data.
+
+![Performance and Risk Metrics widget](../images/widgets/SCR-20250507-bdwu.png)
+
+#### Widget Options
+
+<img src="../images/widgets/SCR-20250507-bfrp.png" alt="Return Statistics options" width="25%"/>
+
+- **Start, End Date** - Defines the time window used to calculate and display rolling period return statistics.
+
+### Risk Statistics
+
+Display risk statistics properties.
+
+- **Volatility** - Measures the standard deviation of returns, indicating the overall risk or variability in investment performance.
+- **Downside Volatility** - Measures the variability of negative returns only, focusing on losses instead of total variation.
+- **Maximum Drawdown** - The largest peak-to-trough decline in value during a specific period, showing the worst potential loss.
+- **Value at Risk** - Estimates the maximum expected loss over a given time period at a specific confidence level.
+- **Expected Shortfall** - Represents the average loss in the worst-case scenarios beyond the Value at Risk threshold.
+- **Beta (Market Index)** - Indicates sensitivity to market movements; a beta above 1 implies higher volatility than the market.
+- **Correlation (Market Index)** - Measures the degree to which the investment moves in relation to the market index.
+- **Tail Correlation (Market Index)** - Measures correlation during extreme market events, focusing on co-movement in the tails of the return distribution.
+- **Sharpe Ratio** - Assesses risk-adjusted return by comparing excess return over the risk-free rate to volatility.
+- **Calmar Ratio** - Evaluates performance relative to risk by dividing annualized return by maximum drawdown.
+
+The data for this widget will be pre-calculated based on the provided return data.
+
+![Risk Statistics widget](../images/widgets/SCR-20250508-llcd.png)
+
+#### Widget Options
+
+<img src="../images/widgets/SCR-20250508-lliz.png" alt="Risk Statistics options" width="25%"/>
+
+- **Primary Benchmark** - The main benchmark used for comparison.
 - **Start, End Date** - Defines the time window used to calculate and display rolling period return statistics.
