@@ -239,7 +239,7 @@ Display risk statistics properties.
 
 - **Value at Risk** - Measures the extent of possible financial losses within the strategy/product over a specific time frame given a certain significance level (alpha). For the VaR, we will using the monthly returns as the input and the alpha specified will be 0.05.
 
-!!! note:
+!!! note
 
     The **Value at Risk** at a given significance level is calculated as:
 
@@ -355,6 +355,7 @@ Display risk statistics properties.
         ).fit().params[1]
         ...
     
+
     🔍 The beta value is obtained from the fitted regression model. It corresponds to the coefficient of the market return (i.e., params[1]). A beta above 1 indicates greater volatility than the market; below 1 indicates lower sensitivity.
 
 
