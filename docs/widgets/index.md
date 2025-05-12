@@ -257,26 +257,26 @@ Display risk statistics properties.
     🧪 Python Code Example
 
     ```python
-    import numpy as np
-    import numpy.typing as npt
-    from typing import Dict
+        import numpy as np
+        import numpy.typing as npt
+        from typing import Dict
 
-    def calculate_var(rets: npt.ArrayLike, alpha: float = 0.05) -> float:
-        """
-        Calculate Value at Risk (VaR) at a given significance level.
+        def calculate_var(rets: npt.ArrayLike, alpha: float = 0.05) -> float:
+            """
+            Calculate Value at Risk (VaR) at a given significance level.
 
-        Args:
-            rets: A NumPy array-like of strategy returns.
-            alpha: Significance level (default is 0.05 for 5% VaR).
+            Args:
+                rets: A NumPy array-like of strategy returns.
+                alpha: Significance level (default is 0.05 for 5% VaR).
 
-        Returns:
-            The VaR value (a negative number indicating potential loss).
-        """
-        rets_array = np.asarray(rets)
-        clean_rets = rets_array[~np.isnan(rets_array)]
-        var = np.quantile(clean_rets, alpha)
+            Returns:
+                The VaR value (a negative number indicating potential loss).
+            """
+            rets_array = np.asarray(rets)
+            clean_rets = rets_array[~np.isnan(rets_array)]
+            var = np.quantile(clean_rets, alpha)
 
-        return var
+            return var
     ```
 
 - **Expected Shortfall** - Measures the weighted average of the "extreme" losses in the tail of the distribution of possible returns, beyond the VaR cutoff point and given a certain significance level (alpha).
