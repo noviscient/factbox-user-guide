@@ -168,7 +168,7 @@ Display risk statistics properties.
 
 !!! note
     $$
-    \text{Annualised Downside Volatility} =
+    \text{Annual. Downside Volatility} =
     \sqrt{
     \frac{
     \sum_{t=1}^{n} \left[ \min(R_{st} - R_{ft}, 0) \right]^2
@@ -186,6 +186,57 @@ Display risk statistics properties.
     - Trading Days per Year: 252
 
 - **Maximum Drawdown** - The largest peak-to-trough decline in value during a specific period, showing the worst potential loss.
+
+!!! note
+    ### 📈 Max Drawdown Calculation
+
+    Compute the cumulative returns series, $C$:
+
+    $$
+    C = [C_1, C_2, \dots, C_T]
+    $$
+
+    Where the cumulative return at each time point $t$ is calculated as:
+
+    $$
+    C_t = \prod_{i=0}^{t} (1 + R_i)
+    $$
+
+    - $R_i$: Return at time $i$  
+    - $t$: Time index in the return series
+
+    ---
+
+    ### 📉 Drawdown Series
+
+    Calculate the drawdown series, $D$:
+
+    $$
+    D = [D_1, D_2, \dots, D_T]
+    $$
+
+    Where drawdown at each time point $t$ is:
+
+    $$
+    D_t = \frac{C_t}{\max_{i=0}^{t}(C_i)} - 1
+    $$
+
+    - $\max_{i=0}^{t}(C_i)$: Maximum cumulative return observed up to time $t$
+
+    ---
+
+    ### 📉 Maximum Drawdown
+
+    Finally, compute the **maximum drawdown** as:
+
+    $$
+    \text{Max Drawdown} = \left| \min(D) \right|
+    $$
+
+    Where:
+    - $D$: Full drawdown time series  
+    - $\min(D)$: The lowest drawdown observed over the time period
+
 - **Value at Risk** - Estimates the maximum expected loss over a given time period at a specific confidence level.
 - **Expected Shortfall** - Represents the average loss in the worst-case scenarios beyond the Value at Risk threshold.
 - **Beta (Market Index)** - Indicates sensitivity to market movements; a beta above 1 implies higher volatility than the market.
