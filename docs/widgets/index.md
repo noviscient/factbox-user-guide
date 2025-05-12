@@ -163,8 +163,11 @@ The data for this widget will be pre-calculated based on the provided return dat
 
 Display risk statistics properties.
 
-- **Volatility** - Measures the standard deviation of returns, indicating the overall risk or variability in investment performance.
-- **Downside Volatility** - Measure of downside risk that focuses on returns that fall below the risk-free benchmark. The risk-free benchmark will depend on the geography where the strategy/product is denominated and the market traded. For US and Global strategies/products, we will be using the 13 week Treasury Bill rate.
+#### Volatility
+Measures the standard deviation of returns, indicating the overall risk or variability in investment performance.
+
+#### Downside Volatility
+Measure of downside risk that focuses on returns that fall below the risk-free benchmark. The risk-free benchmark will depend on the geography where the strategy/product is denominated and the market traded. For US and Global strategies/products, we will be using the 13 week Treasury Bill rate.
 
 !!! note
     $$
@@ -184,6 +187,39 @@ Display risk statistics properties.
     - R_{st}: Strategy/Product return at time t  
     - R_{ft}: Risk-free return at time t
     - Trading Days per Year: 252
+
+🧪 Python Code Example
+
+```python
+import numpy as np
+import pandas as pd
+
+def calculate_downside_volatility(excess_rets: pd.Series, scale: int = 252) -> float:
+    """
+    Calculate the annualized Downside Volatility from a series of excess returns.
+
+    Downside Volatility focuses only on negative excess returns relative to a risk-free rate
+    or benchmark, penalizing losses more than overall volatility.
+
+    Args:
+        excess_rets: Series of excess returns (strategy returns minus risk-free rate)
+        scale: Number of periods per year (e.g., 252 for daily, 12 for monthly)
+
+    Returns:
+        Annualized downside volatility as a float
+    """
+    # Filter only negative excess returns
+    negative_excess_rets = excess_rets[excess_rets < 0]
+
+    # Square them, take the average (divide by total length of excess_rets, not just negative ones)
+    downside_var = (negative_excess_rets**2).sum() / len(excess_rets)
+
+    # Take square root of variance and scale it to annualize
+    downside_volatility = (downside_var ** 0.5) * (scale ** 0.5)
+
+    return downside_volatility
+
+```
 
 - **Maximum Drawdown** - The largest peak-to-trough decline in value during a specific period, showing the worst potential loss.
 
@@ -377,23 +413,21 @@ def calculate_empirical_expected_shortfall(rets: npt.ArrayLike, alpha: float = 0
     - $\beta$: Beta coefficient (our objective)  
     - $\varepsilon$: Error term or residual, capturing the portion of returns not explained by the market
 
-    ---
+🧪 Python Code Example
 
-    🧪 Python Code Example
+```python
+    from statsmodels.api import OLS, add_constant
 
-    ```python
-        from statsmodels.api import OLS, add_constant
+    def calculate_risk_statistics(self):
+        ...
+        risk_stats['Beta (Market Index)'] = OLS(
+            stgy_rets.values,
+            add_constant(rets_all[self.market_rets.name].values)
+        ).fit().params[1]
+        ...
+```
 
-        def calculate_risk_statistics(self):
-            ...
-            risk_stats['Beta (Market Index)'] = OLS(
-                stgy_rets.values,
-                add_constant(rets_all[self.market_rets.name].values)
-            ).fit().params[1]
-            ...
-    ```
-
-    🔍 The beta value is obtained from the fitted regression model. It corresponds to the coefficient of the market return (i.e., params[1]). A beta above 1 indicates greater volatility than the market; below 1 indicates lower sensitivity.
+🔍 The beta value is obtained from the fitted regression model. It corresponds to the coefficient of the market return (i.e., params[1]). A beta above 1 indicates greater volatility than the market; below 1 indicates lower sensitivity.
 
 
 - **Correlation (Market Index)** - Measures the degree to which the investment moves in relation to the market index.
