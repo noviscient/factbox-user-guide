@@ -451,21 +451,100 @@ Indicates sensitivity to market movements; a beta above 1 implies higher volatil
 🧪 Python Code Example
 
 ```python
-    from statsmodels.api import OLS, add_constant
+from typing import Union
+import pandas as pd
+import numpy as np
+from statsmodels.api import OLS, add_constant
 
-    def calculate_risk_statistics(self):
-        ...
-        risk_stats['Beta (Market Index)'] = OLS(
-            stgy_rets.values,
-            add_constant(rets_all[self.market_rets.name].values)
-        ).fit().params[1]
-        ...
+def calculate_beta(
+    returns: Union[pd.Series, np.ndarray],
+    market_rets: Union[pd.Series, np.ndarray]
+) -> float:
+    """
+    Calculate Beta (Market Index) via linear regression of return data against market returns.
+
+    Args:
+        returns: Series or array of return data (e.g., from a strategy or portfolio).
+        market_rets: Series or array of market returns (must be same length and aligned).
+
+    Returns:
+        Beta value as a float.
+    """
+    # Ensure both inputs are aligned pandas Series
+    data = pd.concat([pd.Series(returns), pd.Series(market_rets)], axis=1).dropna()
+    y = data.iloc[:, 0].values  # Return data
+    X = add_constant(data.iloc[:, 1].values)  # Market returns with intercept
+
+    # Perform linear regression
+    model = OLS(y, X).fit()
+    beta = model.params[1]  # Coefficient for market return
+
+    return beta
 ```
 
 🔍 The beta value is obtained from the fitted regression model. It corresponds to the coefficient of the market return (i.e., params[1]). A beta above 1 indicates greater volatility than the market; below 1 indicates lower sensitivity.
 
+- **Correlation (Market Index)** - A measure that determines how the returns move in relation to the market. The market used depends on the geography where the returns are denominated and traded.
 
-- **Correlation (Market Index)** - Measures the degree to which the investment moves in relation to the market index.
+!!! note
+    Correlation measures the strength and direction of the linear relationship between return data and market returns.
+
+    ---
+
+    **🧮 Formula**
+
+    $$
+    \text{correlation} =
+    \frac{
+    \sum \left( (x - \bar{x})(y - \bar{y}) \right)
+    }{
+    \sqrt{
+    \sum (x - \bar{x})^2 \cdot \sum (y - \bar{y})^2
+    }
+    }
+    $$
+
+    Where:
+    - $x$: Return data (e.g. from a strategy)  
+    - $y$: Market return data  
+    - $\bar{x}$: Mean of $x$  
+    - $\bar{y}$: Mean of $y$
+
+🧪 Python Code Example
+
+```python
+import pandas as pd
+from typing import Union
+
+def calculate_correlation(
+    returns: Union[pd.Series, str],
+    market_returns: Union[pd.Series, str],
+    data: pd.DataFrame
+) -> float:
+    """
+    Calculate the Pearson correlation coefficient between return data and market returns.
+
+    Args:
+        returns: Name of the column or Series representing return data.
+        market_returns: Name of the column or Series representing market return data.
+        data: A DataFrame containing both return series.
+
+    Returns:
+        The correlation coefficient as a float.
+    """
+    # If inputs are column names, extract the columns from the DataFrame
+    if isinstance(returns, str) and isinstance(market_returns, str):
+        selected = data[[returns, market_returns]].dropna()
+    else:
+        selected = pd.concat([pd.Series(returns), pd.Series(market_returns)], axis=1).dropna()
+
+    # Compute Pearson correlation and extract the off-diagonal value
+    correlation = selected.corr().iloc[0, 1]
+
+    return correlation
+
+```
+
 - **Tail Correlation (Market Index)** - Measures correlation during extreme market events, focusing on co-movement in the tails of the return distribution.
 - **Sharpe Ratio** - Assesses risk-adjusted return by comparing excess return over the risk-free rate to volatility.
 - **Calmar Ratio** - Evaluates performance relative to risk by dividing annualized return by maximum drawdown.
