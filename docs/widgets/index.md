@@ -252,7 +252,8 @@ def calculate_downside_volatility(excess_rets: pd.Series, scale: int = 252) -> f
 
 ```
 
-- **Maximum Drawdown** - The largest peak-to-trough decline in value during a specific period, showing the worst potential loss.
+#### Maximum Drawdown
+The largest peak-to-trough decline in value during a specific period, showing the worst potential loss.
 
 !!! note
     **📉 Max Drawdown Calculation**
@@ -339,7 +340,8 @@ def cal_underrater(rets: pd.Series) -> pd.Series:
 
 ```
 
-- **Value at Risk** - Measures the extent of possible financial losses within the strategy/product over a specific time frame given a certain significance level (alpha). For the VaR, we will using the monthly returns as the input and the alpha specified will be 0.05.
+#### Value at Risk
+Measures the extent of possible financial losses within the strategy/product over a specific time frame given a certain significance level (alpha). For the VaR, we will using the monthly returns as the input and the alpha specified will be 0.05.
 
 !!! note
 
@@ -379,7 +381,8 @@ def calculate_var(rets: npt.ArrayLike, alpha: float = 0.05) -> float:
     return var
 ```
 
-- **Expected Shortfall** - Measures the weighted average of the "extreme" losses in the tail of the distribution of possible returns, beyond the VaR cutoff point and given a certain significance level (alpha).
+#### Expected Shortfall 
+Measures the weighted average of the "extreme" losses in the tail of the distribution of possible returns, beyond the VaR cutoff point and given a certain significance level (alpha).
 
 !!! note
 
@@ -428,7 +431,8 @@ def calculate_empirical_expected_shortfall(rets: npt.ArrayLike, alpha: float = 0
     return es
 ```
 
-- **Beta (Market Index)** - Indicates sensitivity to market movements; a beta above 1 implies higher volatility than the market.
+#### Beta (Market Index)
+Indicates sensitivity to market movements; a beta above 1 implies higher volatility than the market.
 
 !!! note
 
