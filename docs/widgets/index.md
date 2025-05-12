@@ -164,7 +164,7 @@ The data for this widget will be pre-calculated based on the provided return dat
 Display risk statistics properties.
 
 - **Volatility** - Measures the standard deviation of returns, indicating the overall risk or variability in investment performance.
-- **Downside Volatility** - Measures the variability of negative returns only, focusing on losses instead of total variation.
+- **Downside Volatility** - Measure of downside risk that focuses on returns that fall below the risk-free benchmark. The risk-free benchmark will depend on the geography where the strategy/product is denominated and the market traded. For US and Global strategies/products, we will be using the 13 week Treasury Bill rate.
 
 $$
 \text{Annualised Downside Volatility} =
