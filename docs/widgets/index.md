@@ -188,7 +188,7 @@ Display risk statistics properties.
 - **Maximum Drawdown** - The largest peak-to-trough decline in value during a specific period, showing the worst potential loss.
 
 !!! note
-    ### 📈 Max Drawdown Calculation
+    📈 Max Drawdown Calculation
 
     Compute the cumulative returns series, $C$:
 
@@ -207,7 +207,7 @@ Display risk statistics properties.
 
     ---
 
-    ### 📉 Drawdown Series
+    📉 Drawdown Series
 
     Calculate the drawdown series, $D$:
 
@@ -225,7 +225,7 @@ Display risk statistics properties.
 
     ---
 
-    ### 📉 Maximum Drawdown
+    📉 Maximum Drawdown
 
     Finally, compute the **maximum drawdown** as:
 
