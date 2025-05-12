@@ -210,24 +210,24 @@ def calculate_volatility(rets: pd.Series, scale: int = 252) -> float:
 #### Downside Volatility
 Measure of downside risk that focuses on returns that fall below the risk-free benchmark. The risk-free benchmark will depend on the geography where the strategy/product is denominated and the market traded. For US and Global strategies/products, we will be using the 13 week Treasury Bill rate.
 
-!!! note
-    $$
-    \text{Annual. Downside Volatility} =
-    \sqrt{
-    \frac{
-    \sum_{t=1}^{n} \left[ \min(R_{st} - R_{ft}, 0) \right]^2
-    }{n}
-    \times \text{Trading Days per Year}
-    }
-    $$
+**🧮 Formula**
 
-    **Where:**
+$$
+\text{Annual. Downside Volatility} =
+\sqrt{
+\frac{
+\sum_{t=1}^{n} \left[ \min(R_{st} - R_{ft}, 0) \right]^2
+}{n}
+\times \text{Trading Days per Year}
+}
+$$
 
-    - n: Total number of return observations  
-    - min(X, Y): Returns the smaller of X and Y; used to isolate negative excess returns  
-    - R_{st}: Strategy/Product return at time t  
-    - R_{ft}: Risk-free return at time t
-    - Trading Days per Year: 252
+Where:
+- n: Total number of return observations  
+- min(X, Y): Returns the smaller of X and Y; used to isolate negative excess returns  
+- R_{st}: Strategy/Product return at time t  
+- R_{ft}: Risk-free return at time t
+- Trading Days per Year: 252
 
 🧪 Python Code Example
 
@@ -264,62 +264,58 @@ def calculate_downside_volatility(excess_rets: pd.Series, scale: int = 252) -> f
 
 #### Maximum Drawdown
 The largest peak-to-trough decline in value during a specific period, showing the worst potential loss.
+The **maximum drawdown** measures the largest peak-to-trough decline in cumulative returns over a given time period.
 
-!!! note
-    **📉 Max Drawdown Calculation**
+**🧮 Formula**
 
-    The **maximum drawdown** measures the largest peak-to-trough decline in cumulative returns over a given time period.
+**🔹 Step 1: Compute Cumulative Returns**
 
-    ---
+Define the cumulative returns series $C$:
 
-    **🔹 Step 1: Compute Cumulative Returns**
+$$
+C = [C_1, C_2, \dots, C_T]
+$$
 
-    Define the cumulative returns series $C$:
+Where each cumulative return $C_t$ at time $t$ is:
 
-    $$
-    C = [C_1, C_2, \dots, C_T]
-    $$
+$$
+C_t = \prod_{i=0}^{t} (1 + R_i)
+$$
 
-    Where each cumulative return $C_t$ at time $t$ is:
+- $R_i$: Return at time $i$  
+- $t$: Index in the return series
 
-    $$
-    C_t = \prod_{i=0}^{t} (1 + R_i)
-    $$
+---
 
-    - $R_i$: Return at time $i$  
-    - $t$: Index in the return series
+**🔹 Step 2: Compute Drawdown Series**
 
-    ---
+Define the drawdown series $D$:
 
-    **🔹 Step 2: Compute Drawdown Series**
+$$
+D = [D_1, D_2, \dots, D_T]
+$$
 
-    Define the drawdown series $D$:
+Each drawdown value $D_t$ is:
 
-    $$
-    D = [D_1, D_2, \dots, D_T]
-    $$
+$$
+D_t = \frac{C_t}{\max_{i=0}^{t}(C_i)} - 1
+$$
 
-    Each drawdown value $D_t$ is:
+- $\max_{i=0}^{t}(C_i)$: Maximum cumulative return up to time $t$
 
-    $$
-    D_t = \frac{C_t}{\max_{i=0}^{t}(C_i)} - 1
-    $$
+---
 
-    - $\max_{i=0}^{t}(C_i)$: Maximum cumulative return up to time $t$
+**🔹 Step 3: Compute Maximum Drawdown**
 
-    ---
+The **maximum drawdown** is the lowest point in the drawdown series (expressed as an absolute value):
 
-    **🔹 Step 3: Compute Maximum Drawdown**
+$$
+\text{Max Drawdown} = \left| \min(D) \right|
+$$
 
-    The **maximum drawdown** is the lowest point in the drawdown series (expressed as an absolute value):
-
-    $$
-    \text{Max Drawdown} = \left| \min(D) \right|
-    $$
-
-    Where:
-    - $D$: The full drawdown time series  
-    - $\min(D)$: The worst drawdown observed
+Where:
+- $D$: The full drawdown time series  
+- $\min(D)$: The worst drawdown observed
 
 🧪 Python Code Example
 
@@ -353,18 +349,16 @@ def cal_underrater(rets: pd.Series) -> pd.Series:
 #### Value at Risk
 Measures the extent of possible financial losses within the strategy/product over a specific time frame given a certain significance level (alpha). For the VaR, we will using the monthly returns as the input and the alpha specified will be 0.05.
 
-!!! note
+**🧮 Formula**
 
-    The **Value at Risk** at a given significance level is calculated as:
+$$
+\text{Value at Risk} = Q(\alpha, \text{rets})
+$$
 
-    $$
-    \text{Value at Risk} = Q(\alpha, \text{rets})
-    $$
-
-    Where:
-    - $\alpha$: The significance level (e.g., 0.05 for 5%)
-    - $\text{rets}$: All historical returns of the strategy
-    - $Q$: Quantile function that returns the $\alpha$-th percentile of the return distribution
+Where:
+- $\alpha$: The significance level (e.g., 0.05 for 5%)
+- $\text{rets}$: All historical returns of the strategy
+- $Q$: Quantile function that returns the $\alpha$-th percentile of the return distribution
 
 🧪 Python Code Example
 
