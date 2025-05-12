@@ -163,8 +163,39 @@ The data for this widget will be pre-calculated based on the provided return dat
 
 Display risk statistics properties.
 
+The data for this widget will be pre-calculated based on the provided return data.
+
+![Risk Statistics widget](../images/widgets/SCR-20250508-llcd.png)
+
 #### Volatility
 Measures the standard deviation of returns, indicating the overall risk or variability in investment performance.
+
+🧪 Python Code Example
+
+```python
+import numpy as np
+import pandas as pd
+
+def calculate_volatility(rets: pd.Series, scale: int = 252) -> float:
+    """
+    Calculate the annualized volatility (standard deviation) of returns.
+
+    Args:
+        rets: Series of periodic returns (e.g., daily or monthly)
+        scale: Number of periods per year (252 for daily, 12 for monthly)
+
+    Returns:
+        Annualized volatility as a float
+    """
+    # Compute standard deviation of returns
+    std_dev = rets.std()
+
+    # Annualize the volatility
+    volatility = std_dev * (scale ** 0.5)
+
+    return volatility
+
+```
 
 #### Downside Volatility
 Measure of downside risk that focuses on returns that fall below the risk-free benchmark. The risk-free benchmark will depend on the geography where the strategy/product is denominated and the market traded. For US and Global strategies/products, we will be using the 13 week Treasury Bill rate.
@@ -434,10 +465,6 @@ def calculate_empirical_expected_shortfall(rets: npt.ArrayLike, alpha: float = 0
 - **Tail Correlation (Market Index)** - Measures correlation during extreme market events, focusing on co-movement in the tails of the return distribution.
 - **Sharpe Ratio** - Assesses risk-adjusted return by comparing excess return over the risk-free rate to volatility.
 - **Calmar Ratio** - Evaluates performance relative to risk by dividing annualized return by maximum drawdown.
-
-The data for this widget will be pre-calculated based on the provided return data.
-
-![Risk Statistics widget](../images/widgets/SCR-20250508-llcd.png)
 
 #### Widget Options
 
