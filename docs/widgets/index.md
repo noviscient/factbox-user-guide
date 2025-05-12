@@ -168,7 +168,17 @@ The data for this widget will be pre-calculated based on the provided return dat
 ![Risk Statistics widget](../images/widgets/SCR-20250508-llcd.png)
 
 #### Volatility
-Measures the standard deviation of returns, indicating the overall risk or variability in investment performance.
+Volatility measures how much returns vary on average over a year, based on daily return fluctuations.
+
+**🧮 Formula**
+
+$$
+\text{Annualized Volatility} = \sigma \times \sqrt{\text{Yearly Length}}
+$$
+
+Where:
+- $\sigma$: Standard deviation of the daily returns  
+- $\text{Yearly Length}$: Number of trading periods per year (typically 252 for daily returns)
 
 🧪 Python Code Example
 
