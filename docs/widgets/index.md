@@ -165,6 +165,25 @@ Display risk statistics properties.
 
 - **Volatility** - Measures the standard deviation of returns, indicating the overall risk or variability in investment performance.
 - **Downside Volatility** - Measures the variability of negative returns only, focusing on losses instead of total variation.
+
+$$
+\text{Annualised Downside Volatility} =
+\sqrt{
+\frac{
+\sum_{t=1}^{n} \left[ \min(R_{st} - R_{ft}, 0) \right]^2
+}{n}
+\times \text{Trading Days per Year}
+}
+$$
+
+**Where:**
+
+- n: Total number of return observations  
+- min(X, Y): Returns the smaller of X and Y; used to isolate negative excess returns  
+- R_{st}: Strategy/Product return at time t  
+- R_{ft}: Risk-free return at time t
+- Trading Days per Year: 252
+
 - **Maximum Drawdown** - The largest peak-to-trough decline in value during a specific period, showing the worst potential loss.
 - **Value at Risk** - Estimates the maximum expected loss over a given time period at a specific confidence level.
 - **Expected Shortfall** - Represents the average loss in the worst-case scenarios beyond the Value at Risk threshold.
