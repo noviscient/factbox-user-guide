@@ -484,31 +484,29 @@ def calculate_beta(
 
 🔍 The beta value is obtained from the fitted regression model. It corresponds to the coefficient of the market return (i.e., params[1]). A beta above 1 indicates greater volatility than the market; below 1 indicates lower sensitivity.
 
-- **Correlation (Market Index)** - A measure that determines how the returns move in relation to the market. The market used depends on the geography where the returns are denominated and traded.
+#### Correlation (Market Index)
+A measure that determines how the returns move in relation to the market. The market used depends on the geography where the returns are denominated and traded.
 
-!!! note
-    Correlation measures the strength and direction of the linear relationship between return data and market returns.
+Correlation measures the strength and direction of the linear relationship between return data and market returns.
 
-    ---
+**🧮 Formula**
 
-    **🧮 Formula**
+$$
+\text{correlation} =
+\frac{
+\sum \left( (x - \bar{x})(y - \bar{y}) \right)
+}{
+\sqrt{
+\sum (x - \bar{x})^2 \cdot \sum (y - \bar{y})^2
+}
+}
+$$
 
-    $$
-    \text{correlation} =
-    \frac{
-    \sum \left( (x - \bar{x})(y - \bar{y}) \right)
-    }{
-    \sqrt{
-    \sum (x - \bar{x})^2 \cdot \sum (y - \bar{y})^2
-    }
-    }
-    $$
-
-    Where:
-    - $x$: Return data (e.g. from a strategy)  
-    - $y$: Market return data  
-    - $\bar{x}$: Mean of $x$  
-    - $\bar{y}$: Mean of $y$
+Where:
+- $x$: Return data (e.g. from a strategy)  
+- $y$: Market return data  
+- $\bar{x}$: Mean of $x$  
+- $\bar{y}$: Mean of $y$
 
 🧪 Python Code Example
 
