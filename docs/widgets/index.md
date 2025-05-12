@@ -237,9 +237,127 @@ Display risk statistics properties.
     - $D$: Full drawdown time series  
     - $\min(D)$: The lowest drawdown observed over the time period
 
-- **Value at Risk** - Estimates the maximum expected loss over a given time period at a specific confidence level.
-- **Expected Shortfall** - Represents the average loss in the worst-case scenarios beyond the Value at Risk threshold.
+- **Value at Risk** - Measures the extent of possible financial losses within the strategy/product over a specific time frame given a certain significance level (alpha). For the VaR, we will using the monthly returns as the input and the alpha specified will be 0.05.
+
+!!! note:
+
+    The **Value at Risk** at a given significance level is calculated as:
+
+    $$
+    \text{Value at Risk} = Q(\alpha, \text{rets})
+    $$
+
+    Where:
+    - $\alpha$: The significance level (e.g., 0.05 for 5%)
+    - $\text{rets}$: All historical returns of the strategy
+    - $Q$: Quantile function that returns the $\alpha$-th percentile of the return distribution
+
+    ---
+
+    🧪 Python Code Example
+
+    ```import numpy as np
+        import numpy.typing as npt
+        from typing import Dict
+
+        def calculate_var(rets: npt.ArrayLike, alpha: float = 0.05) -> float:
+            """
+            Calculate Value at Risk (VaR) at a given significance level.
+
+            Args:
+                rets: A NumPy array-like of strategy returns.
+                alpha: Significance level (default is 0.05 for 5% VaR).
+
+            Returns:
+                The VaR value (a negative number indicating potential loss).
+            """
+            rets_array = np.asarray(rets)
+            clean_rets = rets_array[~np.isnan(rets_array)]
+            var = np.quantile(clean_rets, alpha)
+            return var
+
+- **Expected Shortfall** - Measures the weighted average of the "extreme" losses in the tail of the distribution of possible returns, beyond the VaR cutoff point and given a certain significance level (alpha).
+
+!!! note
+
+    The **Expected Shortfall** (also called Conditional Value at Risk) is the **average loss** in the worst-case $\alpha$ fraction of return outcomes.
+
+    ---
+
+    Given $\alpha < 0.05$:
+
+    $$
+    \text{ES} = \frac{1}{N_<} \sum_{i=1}^{N_<} x_i
+    $$
+
+    Where:
+    - $N_<$: Number of returns less than the $\alpha$-quantile
+    - $x_i$: Each return in that worst $\alpha$ tail of the distribution
+
+    ---
+
+    🧪 Python Code Example
+
+    ```python
+    import numpy as np
+    import numpy.typing as npt
+
+    def calculate_empirical_expected_shortfall(rets: npt.ArrayLike, alpha: float = 0.05) -> float:
+        """
+        Calculate the empirical Expected Shortfall (ES) at a given significance level.
+
+        Args:
+            rets: A NumPy array-like of strategy returns.
+            alpha: Significance level (default is 0.05).
+
+        Returns:
+            The ES value (mean of worst-case losses).
+        """
+        rets_array = np.asarray(rets)
+        clean_rets = rets_array[~np.isnan(rets_array)]
+        quantile = np.quantile(clean_rets, alpha)
+
+        if alpha >= 0.5:
+            es = clean_rets[clean_rets >= quantile].mean()
+        else:
+            es = clean_rets[clean_rets <= quantile].mean()
+
+        return es
+
 - **Beta (Market Index)** - Indicates sensitivity to market movements; a beta above 1 implies higher volatility than the market.
+
+!!! note
+
+    Beta measures the return data's sensitivity to market movements. It is derived from the **linear regression** of the return data against market returns.
+
+    $$
+    R_i = \beta R_m + \varepsilon
+    $$
+
+    Where:
+    - $R_i$: Strategy returns  
+    - $R_m$: Market returns  
+    - $\beta$: Beta coefficient (our objective)  
+    - $\varepsilon$: Error term or residual, capturing the portion of returns not explained by the market
+
+    ---
+
+    🧪 Python Code Example
+
+    ```python
+    from statsmodels.api import OLS, add_constant
+
+    def calculate_risk_statistics(self):
+        ...
+        risk_stats['Beta (Market Index)'] = OLS(
+            stgy_rets.values,
+            add_constant(rets_all[self.market_rets.name].values)
+        ).fit().params[1]
+        ...
+    
+    🔍 The beta value is obtained from the fitted regression model. It corresponds to the coefficient of the market return (i.e., params[1]). A beta above 1 indicates greater volatility than the market; below 1 indicates lower sensitivity.
+
+
 - **Correlation (Market Index)** - Measures the degree to which the investment moves in relation to the market index.
 - **Tail Correlation (Market Index)** - Measures correlation during extreme market events, focusing on co-movement in the tails of the return distribution.
 - **Sharpe Ratio** - Assesses risk-adjusted return by comparing excess return over the risk-free rate to volatility.
