@@ -349,15 +349,15 @@ Display risk statistics properties.
     🧪 Python Code Example
 
     ```python
-    from statsmodels.api import OLS, add_constant
+        from statsmodels.api import OLS, add_constant
 
-    def calculate_risk_statistics(self):
-        ...
-        risk_stats['Beta (Market Index)'] = OLS(
-            stgy_rets.values,
-            add_constant(rets_all[self.market_rets.name].values)
-        ).fit().params[1]
-        ...
+        def calculate_risk_statistics(self):
+            ...
+            risk_stats['Beta (Market Index)'] = OLS(
+                stgy_rets.values,
+                add_constant(rets_all[self.market_rets.name].values)
+            ).fit().params[1]
+            ...
     ```
 
     🔍 The beta value is obtained from the fitted regression model. It corresponds to the coefficient of the market return (i.e., params[1]). A beta above 1 indicates greater volatility than the market; below 1 indicates lower sensitivity.
