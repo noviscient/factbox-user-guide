@@ -188,54 +188,89 @@ Display risk statistics properties.
 - **Maximum Drawdown** - The largest peak-to-trough decline in value during a specific period, showing the worst potential loss.
 
 !!! note
-    📈 Max Drawdown Calculation
+    **📉 Max Drawdown Calculation**
 
-    Compute the cumulative returns series, $C$:
+    The **maximum drawdown** measures the largest peak-to-trough decline in cumulative returns over a given time period.
+
+    ---
+
+    **🔹 Step 1: Compute Cumulative Returns**
+
+    Define the cumulative returns series $C$:
 
     $$
     C = [C_1, C_2, \dots, C_T]
     $$
 
-    Where the cumulative return at each time point $t$ is calculated as:
+    Where each cumulative return $C_t$ at time $t$ is:
 
     $$
     C_t = \prod_{i=0}^{t} (1 + R_i)
     $$
 
     - $R_i$: Return at time $i$  
-    - $t$: Time index in the return series
+    - $t$: Index in the return series
 
     ---
 
-    📉 Drawdown Series
+    **🔹 Step 2: Compute Drawdown Series**
 
-    Calculate the drawdown series, $D$:
+    Define the drawdown series $D$:
 
     $$
     D = [D_1, D_2, \dots, D_T]
     $$
 
-    Where drawdown at each time point $t$ is:
+    Each drawdown value $D_t$ is:
 
     $$
     D_t = \frac{C_t}{\max_{i=0}^{t}(C_i)} - 1
     $$
 
-    - $\max_{i=0}^{t}(C_i)$: Maximum cumulative return observed up to time $t$
+    - $\max_{i=0}^{t}(C_i)$: Maximum cumulative return up to time $t$
 
     ---
 
-    📉 Maximum Drawdown
+    **🔹 Step 3: Compute Maximum Drawdown**
 
-    Finally, compute the **maximum drawdown** as:
+    The **maximum drawdown** is the lowest point in the drawdown series (expressed as an absolute value):
 
     $$
     \text{Max Drawdown} = \left| \min(D) \right|
     $$
 
     Where:
-    - $D$: Full drawdown time series  
-    - $\min(D)$: The lowest drawdown observed over the time period
+    - $D$: The full drawdown time series  
+    - $\min(D)$: The worst drawdown observed
+
+🧪 Python Code Example
+
+```python
+import numpy as np
+import pandas as pd 
+
+def cal_underrater(rets: pd.Series) -> pd.Series:
+    """
+    Calculate the drawdown series from a return series.
+
+    Args:
+        rets: A pandas Series of periodic returns (e.g., daily or monthly)
+
+    Returns:
+        A Series representing drawdowns at each time point
+    """
+    # Compute cumulative returns over time: (1 + r1) * (1 + r2) * ... * (1 + rt)
+    cum_rets = (rets + 1).cumprod()
+
+    # Track the running maximum of cumulative returns (i.e., historical peaks)
+    peak = np.maximum.accumulate(cum_rets)
+
+    # Calculate drawdown at each point: how far below the peak the cumulative return is
+    underrater = cum_rets / peak - 1
+
+    return underrater
+
+```
 
 - **Value at Risk** - Measures the extent of possible financial losses within the strategy/product over a specific time frame given a certain significance level (alpha). For the VaR, we will using the monthly returns as the input and the alpha specified will be 0.05.
 
@@ -297,34 +332,34 @@ def calculate_var(rets: npt.ArrayLike, alpha: float = 0.05) -> float:
 
     ---
 
-    🧪 Python Code Example
+🧪 Python Code Example
 
-    ```python
-    import numpy as np
-    import numpy.typing as npt
+```python
+import numpy as np
+import numpy.typing as npt
 
-    def calculate_empirical_expected_shortfall(rets: npt.ArrayLike, alpha: float = 0.05) -> float:
-        """
-        Calculate the empirical Expected Shortfall (ES) at a given significance level.
+def calculate_empirical_expected_shortfall(rets: npt.ArrayLike, alpha: float = 0.05) -> float:
+    """
+    Calculate the empirical Expected Shortfall (ES) at a given significance level.
 
-        Args:
-            rets: A NumPy array-like of strategy returns.
-            alpha: Significance level (default is 0.05).
+    Args:
+        rets: A NumPy array-like of strategy returns.
+        alpha: Significance level (default is 0.05).
 
-        Returns:
-            The ES value (mean of worst-case losses).
-        """
-        rets_array = np.asarray(rets)
-        clean_rets = rets_array[~np.isnan(rets_array)]
-        quantile = np.quantile(clean_rets, alpha)
+    Returns:
+        The ES value (mean of worst-case losses).
+    """
+    rets_array = np.asarray(rets)
+    clean_rets = rets_array[~np.isnan(rets_array)]
+    quantile = np.quantile(clean_rets, alpha)
 
-        if alpha >= 0.5:
-            es = clean_rets[clean_rets >= quantile].mean()
-        else:
-            es = clean_rets[clean_rets <= quantile].mean()
+    if alpha >= 0.5:
+        es = clean_rets[clean_rets >= quantile].mean()
+    else:
+        es = clean_rets[clean_rets <= quantile].mean()
 
-        return es
-    ```
+    return es
+```
 
 - **Beta (Market Index)** - Indicates sensitivity to market movements; a beta above 1 implies higher volatility than the market.
 
