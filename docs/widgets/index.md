@@ -847,3 +847,222 @@ A bar chart widget that decomposes returns into components attributable to Alpha
 
 - **Market** - Represents the portion of returns attributable to market movements, based on the selected benchmark.
 - **Start, End Date** - Defines the time period over which the return decomposition (Alpha, Market, Factor, Risk-Free) is calculated and displayed in the chart.
+
+### Tail Correlation
+A measure of the aggregated tail correlation risk of the returns. Refers to the correlation between the extreme events or outliers of the strategy and the market. The market will depend on the geography where the strategy is denominated and the market traded.
+
+<img src="../images/widgets/SCR-20250513-bufn.png" alt="Tail Correlation"/>
+
+**🧮 Formula**
+
+**🔹 Step 1: Standardize the Returns**
+
+Standardize the returns for each series $i$ (strategy or market) at time $t$:
+
+$$
+Z_{i,t} = \frac{R_{i,t}}{\sigma_i}
+$$
+
+Where:  
+- $R_{i,t}$: Return of series $i$ at time $t$  
+- $\sigma_i$: Standard deviation of returns for series $i$
+
+---
+
+**🔹 Step 2: Compute Weighted Portfolio Returns**
+
+Compute the weighted average of the standardized portfolio return at time $t$:
+
+$$
+Z_{p,t} = Z_{\text{strat},t} \cdot w + Z_{\text{mkt},t} \cdot (1 - w)
+$$
+
+Where:  
+- $w$: Weight assigned to the strategy
+
+---
+
+**🔹 Step 3: Compute Mean of Each Series**
+
+Calculate the mean return for each series $i$ (strategy, market, or portfolio):
+
+$$
+\mu_i = \frac{1}{N_i} \sum_{t=1}^{N_i} R_{i,t}
+$$
+
+Where:  
+- $\mu_i$: Mean return of series $i$  
+- $N_i$: Number of return observations for series $i$
+
+---
+
+**🔹 Step 4: Compute Expected Shortfall**
+
+For each series $i$ (strategy, market, and portfolio), compute the **Expected Shortfall** using the formula defined in the Expected Shortfall section:
+
+- $ES_{\text{strat}}$
+- $ES_{\text{mkt}}$
+- $ES_p$
+
+---
+
+**🔹 Step 5: Calculate Tail Correlation**
+
+Use the following formula to calculate Tail Correlation:
+
+$$
+\text{Tail Correlation} =
+\frac{
+(ES_p - \mu_p)^2
+- w^2 (ES_{\text{strat}} - \mu_{\text{strat}})^2
+- (1 - w)^2 (ES_{\text{mkt}} - \mu_{\text{mkt}})^2
+}{
+2w(1 - w)(ES_{\text{strat}} - \mu_{\text{strat}})(ES_{\text{mkt}} - \mu_{\text{mkt}})
+}
+$$
+
+---
+
+This metric captures the **joint tail risk behavior** between the return's data and the market, going beyond traditional correlation by focusing on extreme downside events.
+
+🧪 Python Code Example
+
+```python
+import numpy as np
+from typing import Callable
+
+def calculate_tail_correlation(
+    returns: np.ndarray,
+    w: float = 0.5,
+    es_func: Callable[[np.ndarray], float] = None,
+    **kwargs
+) -> float:
+    """
+    Calculate tail correlation between two return series using expected shortfall.
+
+    This function computes the tail correlation, which quantifies the dependence
+    between two return distributions in the left tail (i.e., during extreme loss periods).
+
+    Args:
+        returns: A NumPy array of shape (T, 2), where each column represents a return series 
+                 (e.g., strategy and market returns), aligned by time.
+        w: Weight of the first return series in the combined portfolio (default: 0.5).
+        es_func: Function to compute expected shortfall for a 1D array of returns.
+        **kwargs: Additional keyword arguments passed to the expected shortfall function.
+
+    Returns:
+        Tail correlation as a float.
+    """
+    if es_func is None:
+        raise ValueError("Expected shortfall function (es_func) must be provided.")
+
+    # Remove rows with NaN values
+    returns = returns[~np.isnan(returns).any(axis=1)]
+
+    # Standardize each column (series)
+    returns = returns / returns.std(axis=0)
+
+    strat_returns = returns[:, 0]
+    mkt_returns = returns[:, 1]
+    port_returns = strat_returns * w + mkt_returns * (1 - w)
+
+    # Mean returns
+    mu_strat = strat_returns.mean()
+    mu_mkt = mkt_returns.mean()
+    mu_port = port_returns.mean()
+
+    # Expected shortfalls
+    es_strat = es_func(strat_returns, **kwargs)
+    es_mkt = es_func(mkt_returns, **kwargs)
+    es_port = es_func(port_returns, **kwargs)
+
+    # Tail correlation formula
+    numerator = (es_port - mu_port) ** 2 \
+        - (w ** 2) * (es_strat - mu_strat) ** 2 \
+        - ((1 - w) ** 2) * (es_mkt - mu_mkt) ** 2
+
+    denominator = 2 * w * (1 - w) * (es_strat - mu_strat) * (es_mkt - mu_mkt)
+
+    return numerator / denominator
+
+```
+
+#### Widget Options
+
+<img src="../images/widgets/SCR-20250513-bvcy.png" alt="tail Correlation options" width="25%"/>
+
+- **Primary Benchmark** - The main market benchmark used to attribute and compare components of the returns.
+- **Start, End Date** - Specifies the time window over which rolling period return statistics are calculated.
+
+### Worst Months
+A grouped bar chart displaying the 5 worst performing months of the return's data compared against its benchmark and market returns.
+The benchmark and market will depend on the geography where the strategy/product is denominated and the market traded.
+
+<img src="../images/widgets/SCR-20250513-bxyq.png" alt="Worst Months"/>
+
+**🧮 Formula**
+
+For each month $i$, the daily returns within that month are compounded to calculate the monthly return $M_i$:
+
+$$
+M_i = \left[ \prod_{j=1}^{n} (1 + R_j) \right] - 1
+$$
+
+Where:  
+- $M_i$: Monthly return for the $i^{th}$ month  
+- $R_j$: Daily return for the $j^{th}$ day within the month  
+- $n$: Number of trading days in month $i$
+
+---
+
+**🔹 Ranking and Visualization**
+
+Once monthly returns are computed for the full time range:
+- The returns are ranked from best to worst
+- The **5 worst monthly returns** are selected and plotted as a bar chart
+
+This helps visualize downside risks and identify periods of extreme underperformance.
+
+🧪 Python Code Example
+
+```python
+import pandas as pd
+from typing import List
+
+def calculate_worst_months(
+    daily_returns: pd.DataFrame,
+    return_columns: List[str],
+    sort_by: str,
+    num_worst_months: int = 5
+) -> pd.DataFrame:
+    """
+    Calculate the worst-performing months based on compounded monthly returns.
+
+    Args:
+        daily_returns: A DataFrame of daily returns (values should be in decimal format, e.g., 0.01 for 1%).
+        return_columns: List of column names to include in the calculation (e.g., strategy, benchmark, market).
+        sort_by: Column name to sort the monthly returns by (typically the market).
+        num_worst_months: Number of worst months to return (default: 5).
+
+    Returns:
+        A DataFrame containing the `num_worst_months` with the lowest returns in the `sort_by` column.
+    """
+    # Select relevant columns and fill missing values with 0
+    rets = daily_returns[return_columns].fillna(0)
+
+    # Calculate monthly compounded returns
+    monthly_returns = (rets + 1).groupby(pd.Grouper(freq='M')).prod() - 1
+
+    # Sort by the target column and return the worst-performing months
+    worst_months = monthly_returns.sort_values(by=sort_by).head(num_worst_months)
+
+    return worst_months
+```
+
+#### Widget Options
+
+<img src="../images/widgets/SCR-20250513-cfxl.png" alt="Worsst Months options" width="25%"/>
+
+- **Benchmarks** - One or more market benchmarks used to compare and contextualize the returns.
+- **Start, End Date** - Specifies the time window over which monthly return statistics are aggregated and analyzed.
+- **Top N Worst Months** - Defines how many of the worst-performing months (based on the selected return series) will be identified and displayed.
