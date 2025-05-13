@@ -835,3 +835,15 @@ def calculate_calmar_ratio(
 
 - **Primary Benchmark** - The main benchmark used for comparison.
 - **Start, End Date** - Defines the time window used to calculate and display rolling period return statistics.
+
+### Simple Return Attribution
+A bar chart widget that decomposes returns into components attributable to Alpha, Market, Factor, and Risk-Free contributions.
+
+<img src="../images/widgets/SCR-20250512-uqdn.png" alt="Simple Return Attribution"/>
+
+#### Widget Options
+
+<img src="../images/widgets/SCR-20250513-bbud.png" alt="Risk Statistics options" width="25%"/>
+
+- **Market** - Represents the portion of returns attributable to market movements, based on the selected benchmark.
+- **Start, End Date** - Defines the time period over which the return decomposition (Alpha, Market, Factor, Risk-Free) is calculated and displayed in the chart.
