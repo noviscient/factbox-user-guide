@@ -392,24 +392,20 @@ def calculate_var(rets: npt.ArrayLike, alpha: float = 0.05) -> float:
 #### Expected Shortfall 
 Measures the weighted average of the "extreme" losses in the tail of the distribution of possible returns, beyond the VaR cutoff point and given a certain significance level (alpha).
 
-!!! note
+**🧮 Formula**
 
-    The **Expected Shortfall** (also called Conditional Value at Risk) is the **average loss** in the worst-case $\alpha$ fraction of return outcomes.
+The **Expected Shortfall** (also called Conditional Value at Risk) is the **average loss** in the worst-case $\alpha$ fraction of return outcomes.
 
-    ---
+Given $\alpha < 0.05$:
 
-    Given $\alpha < 0.05$:
+$$
+\text{ES} = \frac{1}{N_<} \sum_{i=1}^{N_<} x_i
+$$
 
-    $$
-    \text{ES} = \frac{1}{N_<} \sum_{i=1}^{N_<} x_i
-    $$
+Where:
 
-    Where:
-
-    - $N_<$: Number of returns less than the $\alpha$-quantile
-    - $x_i$: Each return in that worst $\alpha$ tail of the distribution
-
-    ---
+- $N_<$: Number of returns less than the $\alpha$-quantile
+- $x_i$: Each return in that worst $\alpha$ tail of the distribution
 
 🧪 Python Code Example
 
@@ -443,20 +439,20 @@ def calculate_empirical_expected_shortfall(rets: npt.ArrayLike, alpha: float = 0
 #### Beta (Market Index)
 Indicates sensitivity to market movements; a beta above 1 implies higher volatility than the market.
 
-!!! note
+**🧮 Formula**
 
-    Beta measures the return data's sensitivity to market movements. It is derived from the **linear regression** of the return data against market returns.
+Beta measures the return data's sensitivity to market movements. It is derived from the **linear regression** of the return data against market returns.
 
-    $$
-    R_i = \beta R_m + \varepsilon
-    $$
+$$
+R_i = \beta R_m + \varepsilon
+$$
 
-    Where:
+Where:
 
-    - $R_i$: Strategy returns  
-    - $R_m$: Market returns  
-    - $\beta$: Beta coefficient (our objective)  
-    - $\varepsilon$: Error term or residual, capturing the portion of returns not explained by the market
+- $R_i$: Strategy returns  
+- $R_m$: Market returns  
+- $\beta$: Beta coefficient (our objective)  
+- $\varepsilon$: Error term or residual, capturing the portion of returns not explained by the market
 
 🧪 Python Code Example
 
@@ -491,8 +487,8 @@ def calculate_beta(
 
     return beta
 ```
-
-🔍 The beta value is obtained from the fitted regression model. It corresponds to the coefficient of the market return (i.e., params[1]). A beta above 1 indicates greater volatility than the market; below 1 indicates lower sensitivity.
+!!! note
+    The beta value is obtained from the fitted regression model. It corresponds to the coefficient of the market return (i.e., params[1]). A beta above 1 indicates greater volatility than the market; below 1 indicates lower sensitivity.
 
 #### Correlation (Market Index)
 A measure that determines how the returns move in relation to the market. The market used depends on the geography where the returns are denominated and traded.
@@ -554,7 +550,141 @@ def calculate_correlation(
 
 ```
 
-- **Tail Correlation (Market Index)** - Measures correlation during extreme market events, focusing on co-movement in the tails of the return distribution.
+#### Tail Correlation (Market Index)
+Refers to the correlation between the extreme events or outliers of the returns and the market. The market will depend on the geography where the strategy is denominated and the market traded.
+
+**🧮 Formula**
+
+Tail Correlation measures the degree of co-movement between two return distributions in the tails — i.e., during extreme losses.
+
+**🔹 Step 1: Standardize Returns**
+
+Standardize the returns for series $i$ at each time $t$:
+
+$$
+Z_{i,t} = \frac{R_{i,t}}{\sigma_i}
+$$
+
+Where:
+
+- $R_{i,t}$: Return of series $i$ at time $t$  
+- $\sigma_i$: Standard deviation of returns for series $i$  
+- $i$: Can be the strategy (`strat`) or market (`mkt`)
+
+---
+
+**🔹 Step 2: Compute Weighted Portfolio Return**
+
+Compute the weighted portfolio return series $Z_{p,t}$ at each time $t$:
+
+$$
+Z_{p,t} = Z_{\text{strat},t} \cdot w + Z_{\text{mkt},t} \cdot (1 - w)
+$$
+
+Where:
+
+- $w$: Weight assigned to the strategy  
+- $Z_{\text{strat},t}$ and $Z_{\text{mkt},t}$: Standardized returns of the strategy and market
+
+---
+
+**🔹 Step 3: Compute Mean Return of Each Series**
+
+For each return series $i$ (strategy, market, or portfolio):
+
+$$
+\mu_i = \frac{1}{N_i} \sum_{t=1}^{N_i} R_{i,t}
+$$
+
+Where:  
+- $\mu_i$: Mean return of series $i$  
+- $N_i$: Number of return observations for series $i$
+
+---
+
+**🔹 Step 4: Compute Expected Shortfall for Each Series**
+
+Use the **Expected Shortfall** formula (from the ES section) to compute:
+
+- $ES_{\text{strat}}$
+- $ES_{\text{mkt}}$
+- $ES_{p}$
+
+---
+
+**🔹 Step 5: Calculate Tail Correlation**
+
+Finally, compute Tail Correlation:
+
+$$
+\text{Tail Correlation} =
+\frac{
+(ES_p - \mu_p)^2
+- w^2 (ES_{\text{strat}} - \mu_{\text{strat}})^2
+- (1 - w)^2 (ES_{\text{mkt}} - \mu_{\text{mkt}})^2
+}{
+2w(1 - w)(ES_{\text{strat}} - \mu_{\text{strat}})(ES_{\text{mkt}} - \mu_{\text{mkt}})
+}
+$$
+
+🧪 Python Code Example
+
+```python
+from typing import Callable
+import numpy as np
+
+def calculate_tail_correlation(
+    rets: np.ndarray,
+    w: float = 0.5,
+    func: Callable[[np.ndarray], float] = None,
+    **kwargs
+) -> float:
+    """
+    Calculate the tail correlation between two return series using Expected Shortfall.
+
+    This measures co-movement in the extreme (left-tail) parts of the distributions.
+
+    Args:
+        rets: A 2D NumPy array of shape (T, 2), where each column is a return series
+              (e.g., strategy and market), aligned by time.
+        w: Weight of the first series (strategy) in the portfolio. Default is 0.5.
+        func: Function to compute Expected Shortfall. It should accept a 1D array of returns
+              and return a float. If None, an empirical ES function must be passed via kwargs.
+        **kwargs: Additional arguments passed to the ES function (e.g., alpha=0.05).
+
+    Returns:
+        Tail correlation coefficient as a float.
+    """
+    if func is None:
+        raise ValueError("Expected Shortfall function (func) must be provided.")
+
+    # Remove rows with NaNs
+    rets = rets[~np.isnan(rets).any(axis=1)]
+
+    # Standardize both return series
+    rets = rets / rets.std(axis=0)
+
+    rets_1, rets_2 = rets[:, 0], rets[:, 1]
+    rets_p = rets_1 * w + rets_2 * (1 - w)
+
+    # Means of each series
+    mu_1, mu_2, mu_p = rets_1.mean(), rets_2.mean(), rets_p.mean()
+
+    # Expected Shortfall of each series
+    es_1 = func(rets_1, **kwargs)
+    es_2 = func(rets_2, **kwargs)
+    es_p = func(rets_p, **kwargs)
+
+    # Tail correlation formula
+    numerator = (es_p - mu_p) ** 2 - w ** 2 * (es_1 - mu_1) ** 2 - (1 - w) ** 2 * (es_2 - mu_2) ** 2
+    denominator = 2 * w * (1 - w) * (es_1 - mu_1) * (es_2 - mu_2)
+
+    tail_correlation = numerator / denominator
+
+    return tail_correlation
+
+```
+
 - **Sharpe Ratio** - Assesses risk-adjusted return by comparing excess return over the risk-free rate to volatility.
 - **Calmar Ratio** - Evaluates performance relative to risk by dividing annualized return by maximum drawdown.
 
