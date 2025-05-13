@@ -176,8 +176,7 @@ $$
 \text{Annualized Volatility} = \sigma \times \sqrt{\text{Yearly Length}}
 $$
 
-Where:
-
+Where:  
 - $\sigma$: Standard deviation of the daily returns  
 - $\text{Yearly Length}$: Number of trading periods per year (typically 252 for daily returns)
 
@@ -223,8 +222,7 @@ $$
 }
 $$
 
-Where:
-
+Where:  
 - n: Total number of return observations  
 - min(X, Y): Returns the smaller of X and Y; used to isolate negative excess returns  
 - R_{st}: Strategy/Product return at time t  
@@ -315,8 +313,7 @@ $$
 \text{Max Drawdown} = \left| \min(D) \right|
 $$
 
-Where:
-
+Where:  
 - $D$: The full drawdown time series  
 - $\min(D)$: The worst drawdown observed
 
@@ -358,8 +355,7 @@ $$
 \text{Value at Risk} = Q(\alpha, \text{rets})
 $$
 
-Where:
-
+Where:  
 - $\alpha$: The significance level (e.g., 0.05 for 5%)
 - $\text{rets}$: All historical returns of the strategy
 - $Q$: Quantile function that returns the $\alpha$-th percentile of the return distribution
@@ -402,8 +398,7 @@ $$
 \text{ES} = \frac{1}{N_<} \sum_{i=1}^{N_<} x_i
 $$
 
-Where:
-
+Where:  
 - $N_<$: Number of returns less than the $\alpha$-quantile
 - $x_i$: Each return in that worst $\alpha$ tail of the distribution
 
@@ -447,8 +442,7 @@ $$
 R_i = \beta R_m + \varepsilon
 $$
 
-Where:
-
+Where:  
 - $R_i$: Strategy returns  
 - $R_m$: Market returns  
 - $\beta$: Beta coefficient (our objective)  
@@ -508,8 +502,7 @@ $$
 }
 $$
 
-Where:
-
+Where:  
 - $x$: Return data (e.g. from a strategy)  
 - $y$: Market return data  
 - $\bar{x}$: Mean of $x$  
@@ -565,8 +558,7 @@ $$
 Z_{i,t} = \frac{R_{i,t}}{\sigma_i}
 $$
 
-Where:
-
+Where:  
 - $R_{i,t}$: Return of series $i$ at time $t$  
 - $\sigma_i$: Standard deviation of returns for series $i$  
 - $i$: Can be the strategy (`strat`) or market (`mkt`)
@@ -581,8 +573,7 @@ $$
 Z_{p,t} = Z_{\text{strat},t} \cdot w + Z_{\text{mkt},t} \cdot (1 - w)
 $$
 
-Where:
-
+Where:  
 - $w$: Weight assigned to the strategy  
 - $Z_{\text{strat},t}$ and $Z_{\text{mkt},t}$: Standardized returns of the strategy and market
 
@@ -685,8 +676,158 @@ def calculate_tail_correlation(
 
 ```
 
-- **Sharpe Ratio** - Assesses risk-adjusted return by comparing excess return over the risk-free rate to volatility.
-- **Calmar Ratio** - Evaluates performance relative to risk by dividing annualized return by maximum drawdown.
+#### Sharpe Ratio
+Measure of the return data's risk-adjusted performance, calculated by comparing its return to that of a risk-free benchmark. The risk-free benchmark will depend on the geography where the returns are denominated and the market traded. For US and Global returns, we will be using the 13-week Treasury Bill rate.
+
+**🧮 Formula**
+
+The Sharpe Ratio measures the risk-adjusted performance of return data by comparing its excess returns (over a risk-free benchmark) to the standard deviation of those returns.
+
+**🔹 Step 1: Compute Excess Returns**
+
+At each time $t$, compute the excess return:
+
+$$
+R_{\text{excess},t} = R_{\text{strat},t} - R_{f,t}
+$$
+
+Where:  
+- $R_{\text{strat},t}$: Return at time $t$  
+- $R_{f,t}$: Risk-free return at time $t$
+
+---
+
+**🔹 Step 2: Compute Sharpe Ratio**
+
+The Sharpe Ratio is calculated as:
+
+$$
+\text{Sharpe Ratio} = \frac{E(R_{\text{excess}})}{\sigma_{\text{excess}}} \times \sqrt{\text{YEARLY LENGTH}}
+$$
+
+Where:  
+- $E(R_{\text{excess}})$: Mean of the excess returns  
+- $\sigma_{\text{excess}}$: Standard deviation of the excess returns  
+- $\text{YEARLY LENGTH}$: Number of trading days in a year (typically 252)
+
+
+!!! note
+    For US and global returns, the risk-free rate used is the 13-week Treasury Bill rate.
+
+🧪 Python Code Example
+
+```python
+import numpy as np
+import pandas as pd
+
+def calculate_sharpe_ratio(excess_rets: pd.Series, scale: int = 252) -> float:
+    """
+    Calculate the annualized Sharpe Ratio from a series of excess returns.
+
+    The Sharpe Ratio measures risk-adjusted return by comparing the mean of excess returns 
+    to their standard deviation, scaled to the annual level.
+
+    Args:
+        excess_rets: Series of excess returns (e.g., returns minus risk-free rate).
+        scale: Number of periods per year (252 for daily, 12 for monthly, etc.).
+
+    Returns:
+        Sharpe Ratio as a float.
+    """
+    mean_excess = excess_rets.mean()
+    std_excess = excess_rets.std()
+
+    if std_excess == 0:
+        return np.nan  # avoid divide-by-zero
+
+    sharpe_ratio = (mean_excess / std_excess) * np.sqrt(scale)
+
+    return sharpe_ratio
+```
+
+#### Calmar Ratio
+Measure of risk-adjusted returns for investment funds such as hedge funds.
+
+!!! note
+    Calmar Ratio focuses on worst-case scenario through the maximum drawdown while the Sharpe Ratio considers overall volatility
+
+**🧮 Formula**
+
+The **Calmar Ratio** evaluates risk-adjusted performance by comparing the average excess return to the maximum drawdown. It is useful for strategies with high volatility, where drawdowns are a key concern.
+
+**🔹 Step 1: Compute Excess Returns**
+
+At each time $t$, calculate excess returns:
+
+$$
+R_{\text{excess},t} = R_{\text{strat},t} - R_{f,t}
+$$
+
+Where:  
+- $R_{\text{strat},t}$: Strategy return at time $t$  
+- $R_{f,t}$: Risk-free benchmark return at time $t$
+
+---
+
+**🔹 Step 2: Compute Maximum Drawdown**
+
+Refer to the **Maximum Drawdown** section to calculate the worst peak-to-trough decline in cumulative returns over the period.
+
+Let:
+- $\text{Max Drawdown}$ be the maximum drawdown value (expressed as a positive number)
+
+---
+
+**🔹 Step 3: Compute Calmar Ratio**
+
+The **Calmar Ratio** is calculated as:
+
+$$
+\text{Calmar Ratio} = \frac{E(R_{\text{excess}})}{\text{Max Drawdown}} \times \sqrt{\text{YEARLY LENGTH}}
+$$
+
+Where:  
+- $E(R_{\text{excess}})$: Mean of excess returns  
+- $\text{Max Drawdown}$: Absolute maximum drawdown  
+- $\text{YEARLY LENGTH}$: Number of trading periods per year (typically 252 for daily returns)
+
+!!! note
+    The Calmar Ratio is especially helpful when assessing strategies with high drawdown sensitivity.
+
+🧪 Python Code Example
+
+```python
+import numpy as np
+import pandas as pd
+
+def calculate_calmar_ratio(
+    excess_rets: pd.Series, 
+    max_drawdown: float, 
+    scale: int = 252
+) -> float:
+    """
+    Calculate the Calmar Ratio from excess returns and maximum drawdown.
+
+    The Calmar Ratio measures risk-adjusted performance by comparing the mean
+    of excess returns to the maximum drawdown, annualized.
+
+    Args:
+        excess_rets: Series of excess returns (strategy returns - risk-free rate).
+        max_drawdown: Maximum drawdown value (as a positive float).
+        scale: Number of trading periods per year (default: 252 for daily).
+
+    Returns:
+        Calmar Ratio as a float.
+    """
+    mean_excess = excess_rets.mean()
+
+    if max_drawdown == 0:
+        return np.nan  # avoid division by zero
+
+    calmar_ratio = (mean_excess / max_drawdown) * scale
+    
+    return calmar_ratio
+```
 
 #### Widget Options
 
