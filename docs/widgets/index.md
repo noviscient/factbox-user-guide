@@ -177,6 +177,7 @@ $$
 $$
 
 Where:
+
 - $\sigma$: Standard deviation of the daily returns  
 - $\text{Yearly Length}$: Number of trading periods per year (typically 252 for daily returns)
 
@@ -223,6 +224,7 @@ $$
 $$
 
 Where:
+
 - n: Total number of return observations  
 - min(X, Y): Returns the smaller of X and Y; used to isolate negative excess returns  
 - R_{st}: Strategy/Product return at time t  
@@ -314,6 +316,7 @@ $$
 $$
 
 Where:
+
 - $D$: The full drawdown time series  
 - $\min(D)$: The worst drawdown observed
 
@@ -356,6 +359,7 @@ $$
 $$
 
 Where:
+
 - $\alpha$: The significance level (e.g., 0.05 for 5%)
 - $\text{rets}$: All historical returns of the strategy
 - $Q$: Quantile function that returns the $\alpha$-th percentile of the return distribution
@@ -401,6 +405,7 @@ Measures the weighted average of the "extreme" losses in the tail of the distrib
     $$
 
     Where:
+
     - $N_<$: Number of returns less than the $\alpha$-quantile
     - $x_i$: Each return in that worst $\alpha$ tail of the distribution
 
@@ -447,6 +452,7 @@ Indicates sensitivity to market movements; a beta above 1 implies higher volatil
     $$
 
     Where:
+
     - $R_i$: Strategy returns  
     - $R_m$: Market returns  
     - $\beta$: Beta coefficient (our objective)  
@@ -507,6 +513,7 @@ $$
 $$
 
 Where:
+
 - $x$: Return data (e.g. from a strategy)  
 - $y$: Market return data  
 - $\bar{x}$: Mean of $x$  
