@@ -809,7 +809,7 @@ def calculate_calmar_ratio(
 ## Simple Return Attribution
 A bar chart widget that decomposes returns into components attributable to Alpha, Market, Factor, and Risk-Free contributions.
 
-<img src="../images/widgets/SCR-20250512-uqdn.png" alt="Simple Return Attribution"/>
+<img src="../../images/widgets/SCR-20250512-uqdn.png" alt="Simple Return Attribution"/>
 
 #### Widget Options
 
@@ -821,7 +821,7 @@ A bar chart widget that decomposes returns into components attributable to Alpha
 ### Tail Correlation
 A measure of the aggregated tail correlation risk of the returns. Refers to the correlation between the extreme events or outliers of the strategy and the market. The market will depend on the geography where the strategy is denominated and the market traded.
 
-<img src="../images/widgets/SCR-20250513-bufn.png" alt="Tail Correlation"/>
+<img src="../../images/widgets/SCR-20250513-bufn.png" alt="Tail Correlation"/>
 
 **🧮 Formula**
 
@@ -968,7 +968,7 @@ def calculate_tail_correlation(
 A grouped bar chart displaying the 5 worst performing months of the return's data compared against its benchmark and market returns.
 The benchmark and market will depend on the geography where the strategy/product is denominated and the market traded.
 
-<img src="../images/widgets/SCR-20250513-bxyq.png" alt="Worst Months chart"/>
+<img src="../../images/widgets/SCR-20250513-bxyq.png" alt="Worst Months chart"/>
 
 **🧮 Formula**
 
