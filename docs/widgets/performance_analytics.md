@@ -588,7 +588,7 @@ $$
 }
 $$
 
-### 🧪 Python Code Example
+🧪 Python Code Example
 
 ```python
 from typing import Callable
@@ -957,7 +957,7 @@ def calculate_tail_correlation(
 
 ```
 
-### Widget Options
+### ⚙️ Widget Options
 
 <img src="../../images/widgets/SCR-20250513-bvcy.png" alt="tail Correlation options" width="25%"/>
 
