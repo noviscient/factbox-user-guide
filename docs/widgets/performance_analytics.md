@@ -968,7 +968,7 @@ def calculate_tail_correlation(
 A grouped bar chart displaying the 5 worst performing months of the return's data compared against its benchmark and market returns.
 The benchmark and market will depend on the geography where the strategy/product is denominated and the market traded.
 
-<img src="../images/widgets/SCR-20250513-bxyq.png" alt="Worst Months"/>
+<img src="../images/widgets/SCR-20250513-bxyq.png" alt="Worst Months chart"/>
 
 **🧮 Formula**
 
