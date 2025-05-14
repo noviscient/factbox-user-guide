@@ -1,36 +1,34 @@
-# Widgets1
-
 Factsheets can be built using a selected set of widgets: Basic, Performance Analytics, and Factor Analytics. The Performance and Factor Analytics widgets are pre-calculated based on the uploaded return data and the selected benchmark.
 
-## Basic
+# Basic
 
-### CSV Key-Value Data
+## CSV Key-Value Data
 
 CSV format with two columns: `key`, `value`.
 
-### CSV Table Data
+## CSV Table Data
 
 CSV format with multiple columns representing tabular data.
 
-### Factsheet Title
+## Factsheet Title
 
 Displays a title and description for the factsheet.
 
-### Free Text
+## Free Text
 
 Plain text input, up to 200 characters.
 
-### Image
+## Image
 
 Upload `.jpg`, `.jpeg`, or `.png` images (maximum size: 2 MB).
 
-### Time Series Chart
+## Time Series Chart
 
 Upload time series data in CSV format.
 
-## Performance Analytics
+# Performance Analytics
 
-### Cumulative Performance Chart
+## Cumulative Performance Chart
 
 The cumulative performance of an investment represents the total percentage change in the asset’s price over a specific period.
 
@@ -38,14 +36,14 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ![Cumulative Performance Chart widget](../images/widgets/SCR-20250506-cwyt.png)
 
-#### Widget Options
+### Widget Options
 
 <img src="../images/widgets/SCR-20250506-cyaz.png" alt="Cumulative Performance Chart widget options" width="25%"/>
 
 - **Benchmarks** - Select a benchmark from the list.
 - **Start, End Date** - Set the date range for the displayed data.
 
-### Distribution of Monthly Returns
+## Distribution of Monthly Returns
 
 The chart displays the number of months in which a portfolio's monthly performance historically has fallen within varying performance increments.
 
@@ -53,14 +51,14 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ![Distribution of Monthly Returns widget](../images/widgets/SCR-20250506-lgdf.png)
 
-#### Widget Options
+### Widget Options
 
 <img src="../images/widgets/SCR-20250506-lhax.png" alt="Distribution of Monthly Returns widget options" width="25%"/>
 
 - **Benchmarks** - Select a benchmark from the list.
 - **Start, End Date** - Set the date range for the displayed data.
 
-### Drawdown Report
+## Drawdown Report
 
 A drawdown is defined as a loss of equity from a peak to a trough within a single month or over a consecutive period of months.
 
@@ -68,14 +66,14 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ![Drawdown Report Table widget](../images/widgets/SCR-20250506-lmlr.png)
 
-#### Widget Options
+### Widget Options
 
 <img src="../images/widgets/SCR-20250506-lmuw.png" alt="Drawdown Report widget options" width="25%"/>
 
 - **Top N Drawdowns** - Number of drawdown periods to display.
 - **Start, End Date** - Set the date range for the displayed data.
 
-### Expected Shortfall
+## Expected Shortfall
 
 Represents the expected shortfall risk associated with the returns data.
 
@@ -83,14 +81,14 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ![Expected Shortfall widget](../images/widgets/SCR-20250506-lqnz.png)
 
-#### Widget Options
+### Widget Options
 
 <img src="../images/widgets/SCR-20250506-lskv.png" alt="Expected Shortfall options" width="25%"/>
 
 - **Confidence Level** - The probability that losses will not exceed the expected shortfall threshold. For example, a 95% confidence level means there is a 5% chance that losses will exceed the calculated expected shortfall.
 - **Start, End Date** - Defines the time range over which the expected shortfall is calculated, based on the provided return data.
 
-### Historical Performance Table
+## Historical Performance Table
 
 Analyzing historical performance data cah help you identify trends, by comparing historical data, you can spot upward and downward performance trends.
 
@@ -98,13 +96,13 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ![Historical Performance Table widget](../images/widgets/SCR-20250506-ufnn.png)
 
-#### Widget Options
+### Widget Options
 
 <img src="../images/widgets/SCR-20250506-uglz.png" alt="Historical Performance Table options" width="25%"/>
 
 - **Start, End Date** - Sets the period for displaying historical performance metrics based on available return data.
 
-### Performance and Risk Metrics
+## Performance and Risk Metrics
 
 Performance and risk metrics are widely used to evaluate the performance of a portfolio, and forms a major component of portfolio management.
 
@@ -112,7 +110,7 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ![Performance and Risk Metrics widget](../images/widgets/SCR-20250506-uhys.png)
 
-#### Widget Options
+### Widget Options
 
 <img src="../images/widgets/SCR-20250506-ujba.png" alt="Performance and Risk Metrics options" width="25%"/>
 
@@ -120,7 +118,7 @@ The data for this chart will be pre-calculated based on the provided return data
 -**Prinmary Benchmark** - The main benchmark used for comparison.
 - **Start, End Date** - Sets the time period for displaying historical performance metrics based on the available return data.
 
-### Return Report
+## Return Report
 
 The return report represents best, worst, average, median and last returns of different rolling period.
 
@@ -128,13 +126,13 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ![Performance and Risk Metrics widget](../images/widgets/SCR-20250506-urbb.png)
 
-#### Widget Options
+### Widget Options
 
 <img src="../images/widgets/SCR-20250507-bals.png" alt="Return Report options" width="25%"/>
 
 - **Start, End Date** - Defines the time window used to calculate and display rolling period return statistics.
 
-### Return Statistics
+## Return Statistics
 
 Return statistics show statistical measures for the return data provided.
 
@@ -153,13 +151,13 @@ The data for this widget will be pre-calculated based on the provided return dat
 
 ![Performance and Risk Metrics widget](../images/widgets/SCR-20250507-bdwu.png)
 
-#### Widget Options
+### Widget Options
 
 <img src="../images/widgets/SCR-20250507-bfrp.png" alt="Return Statistics options" width="25%"/>
 
 - **Start, End Date** - Defines the time window used to calculate and display rolling period return statistics.
 
-### Risk Statistics
+## Risk Statistics
 
 Display risk statistics properties.
 
@@ -167,7 +165,7 @@ The data for this widget will be pre-calculated based on the provided return dat
 
 ![Risk Statistics widget](../images/widgets/SCR-20250508-llcd.png)
 
-#### Volatility
+### Volatility
 Volatility measures how much returns vary on average over a year, based on daily return fluctuations.
 
 **🧮 Formula**
@@ -207,7 +205,7 @@ def calculate_volatility(rets: pd.Series, scale: int = 252) -> float:
 
 ```
 
-#### Downside Volatility
+### Downside Volatility
 Measure of downside risk that focuses on returns that fall below the risk-free benchmark. The risk-free benchmark will depend on the geography where the strategy/product is denominated and the market traded. For US and Global strategies/products, we will be using the 13 week Treasury Bill rate.
 
 **🧮 Formula**
@@ -262,7 +260,7 @@ def calculate_downside_volatility(excess_rets: pd.Series, scale: int = 252) -> f
 
 ```
 
-#### Maximum Drawdown
+### Maximum Drawdown
 The largest peak-to-trough decline in value during a specific period, showing the worst potential loss.
 The **maximum drawdown** measures the largest peak-to-trough decline in cumulative returns over a given time period.
 
@@ -346,7 +344,7 @@ def cal_underrater(rets: pd.Series) -> pd.Series:
 
 ```
 
-#### Value at Risk
+### Value at Risk
 Measures the extent of possible financial losses within the strategy/product over a specific time frame given a certain significance level (alpha). For the VaR, we will using the monthly returns as the input and the alpha specified will be 0.05.
 
 **🧮 Formula**
@@ -385,7 +383,7 @@ def calculate_var(rets: npt.ArrayLike, alpha: float = 0.05) -> float:
     return var
 ```
 
-#### Expected Shortfall 
+### Expected Shortfall 
 Measures the weighted average of the "extreme" losses in the tail of the distribution of possible returns, beyond the VaR cutoff point and given a certain significance level (alpha).
 
 **🧮 Formula**
@@ -431,7 +429,7 @@ def calculate_empirical_expected_shortfall(rets: npt.ArrayLike, alpha: float = 0
     return es
 ```
 
-#### Beta (Market Index)
+### Beta (Market Index)
 Indicates sensitivity to market movements; a beta above 1 implies higher volatility than the market.
 
 **🧮 Formula**
@@ -484,7 +482,7 @@ def calculate_beta(
 !!! note
     The beta value is obtained from the fitted regression model. It corresponds to the coefficient of the market return (i.e., params[1]). A beta above 1 indicates greater volatility than the market; below 1 indicates lower sensitivity.
 
-#### Correlation (Market Index)
+### Correlation (Market Index)
 A measure that determines how the returns move in relation to the market. The market used depends on the geography where the returns are denominated and traded.
 
 Correlation measures the strength and direction of the linear relationship between return data and market returns.
@@ -543,7 +541,7 @@ def calculate_correlation(
 
 ```
 
-#### Tail Correlation (Market Index)
+### Tail Correlation (Market Index)
 Refers to the correlation between the extreme events or outliers of the returns and the market. The market will depend on the geography where the strategy is denominated and the market traded.
 
 **🧮 Formula**
@@ -676,7 +674,7 @@ def calculate_tail_correlation(
 
 ```
 
-#### Sharpe Ratio
+### Sharpe Ratio
 Measure of the return data's risk-adjusted performance, calculated by comparing its return to that of a risk-free benchmark. The risk-free benchmark will depend on the geography where the returns are denominated and the market traded. For US and Global returns, we will be using the 13-week Treasury Bill rate.
 
 **🧮 Formula**
@@ -745,7 +743,7 @@ def calculate_sharpe_ratio(excess_rets: pd.Series, scale: int = 252) -> float:
     return sharpe_ratio
 ```
 
-#### Calmar Ratio
+### Calmar Ratio
 Measure of risk-adjusted returns for investment funds such as hedge funds.
 
 !!! note
@@ -829,14 +827,14 @@ def calculate_calmar_ratio(
     return calmar_ratio
 ```
 
-#### Widget Options
+### Widget Options
 
 <img src="../images/widgets/SCR-20250508-lliz.png" alt="Risk Statistics options" width="25%"/>
 
 - **Primary Benchmark** - The main benchmark used for comparison.
 - **Start, End Date** - Defines the time window used to calculate and display rolling period return statistics.
 
-### Simple Return Attribution
+## Simple Return Attribution
 A bar chart widget that decomposes returns into components attributable to Alpha, Market, Factor, and Risk-Free contributions.
 
 <img src="../images/widgets/SCR-20250512-uqdn.png" alt="Simple Return Attribution"/>
@@ -987,14 +985,14 @@ def calculate_tail_correlation(
 
 ```
 
-#### Widget Options
+### Widget Options
 
 <img src="../images/widgets/SCR-20250513-bvcy.png" alt="tail Correlation options" width="25%"/>
 
 - **Primary Benchmark** - The main market benchmark used to attribute and compare components of the returns.
 - **Start, End Date** - Specifies the time window over which rolling period return statistics are calculated.
 
-### Worst Months
+## Worst Months
 A grouped bar chart displaying the 5 worst performing months of the return's data compared against its benchmark and market returns.
 The benchmark and market will depend on the geography where the strategy/product is denominated and the market traded.
 
@@ -1059,10 +1057,13 @@ def calculate_worst_months(
     return worst_months
 ```
 
-#### Widget Options
+### Widget Options
 
 <img src="../images/widgets/SCR-20250513-cfxl.png" alt="Worsst Months options" width="25%"/>
 
 - **Benchmarks** - One or more market benchmarks used to compare and contextualize the returns.
 - **Start, End Date** - Specifies the time window over which monthly return statistics are aggregated and analyzed.
 - **Top N Worst Months** - Defines how many of the worst-performing months (based on the selected return series) will be identified and displayed.
+
+# Factor Analytics
+
