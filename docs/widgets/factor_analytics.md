@@ -133,6 +133,13 @@ risk_expos, ret_attrs, risk_attrs = calculate_performance_attribution(
 
 ```
 
+### ⚙️ Widget Options
+
+<img src="../../images/widgets/SCR-20250514-lppk.png" alt="Current Factor Exposures options" width="25%"/>
+
+- **Market** - Represents the market factor used in performance attribution or comparison, typically reflecting the excess return of the overall market.
+- **Start, End Date** - Specifies the time window over which returns and factor exposures are calculated and analyzed.
+
 ## Current Factor Return Attributions
 
 ## Current Factor Risk Attributions
