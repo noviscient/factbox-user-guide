@@ -970,7 +970,7 @@ The benchmark and market will depend on the geography where the strategy/product
 
 <img src="../../images/widgets/SCR-20250513-bxyq.png" alt="Worst Months chart"/>
 
-**🧮 Formula**
+### 🧮 Formula
 
 For each month $i$, the daily returns within that month are compounded to calculate the monthly return $M_i$:
 
@@ -993,7 +993,7 @@ Once monthly returns are computed for the full time range:
 
 This helps visualize downside risks and identify periods of extreme underperformance.
 
-🧪 Python Code Example
+### 🧪 Python Code Example
 
 ```python
 import pandas as pd
@@ -1029,7 +1029,7 @@ def calculate_worst_months(
     return worst_months
 ```
 
-### Widget Options
+### ⚙️ Widget Options
 
 <img src="../../images/widgets/SCR-20250513-cfxl.png" alt="Worsst Months options" width="25%"/>
 
