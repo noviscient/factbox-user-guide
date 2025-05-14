@@ -25,7 +25,7 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ### Widget Options
 
-<img src="../images/widgets/SCR-20250506-lhax.png" alt="Distribution of Monthly Returns widget options" width="25%"/>
+<img src="../../images/widgets/SCR-20250506-lhax.png" alt="Distribution of Monthly Returns widget options" width="25%"/>
 
 - **Benchmarks** - Select a benchmark from the list.
 - **Start, End Date** - Set the date range for the displayed data.
@@ -40,7 +40,7 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ### Widget Options
 
-<img src="../images/widgets/SCR-20250506-lmuw.png" alt="Drawdown Report widget options" width="25%"/>
+<img src="../../images/widgets/SCR-20250506-lmuw.png" alt="Drawdown Report widget options" width="25%"/>
 
 - **Top N Drawdowns** - Number of drawdown periods to display.
 - **Start, End Date** - Set the date range for the displayed data.
@@ -55,7 +55,7 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ### Widget Options
 
-<img src="../images/widgets/SCR-20250506-lskv.png" alt="Expected Shortfall options" width="25%"/>
+<img src="../../images/widgets/SCR-20250506-lskv.png" alt="Expected Shortfall options" width="25%"/>
 
 - **Confidence Level** - The probability that losses will not exceed the expected shortfall threshold. For example, a 95% confidence level means there is a 5% chance that losses will exceed the calculated expected shortfall.
 - **Start, End Date** - Defines the time range over which the expected shortfall is calculated, based on the provided return data.
@@ -70,7 +70,7 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ### Widget Options
 
-<img src="../images/widgets/SCR-20250506-uglz.png" alt="Historical Performance Table options" width="25%"/>
+<img src="../../images/widgets/SCR-20250506-uglz.png" alt="Historical Performance Table options" width="25%"/>
 
 - **Start, End Date** - Sets the period for displaying historical performance metrics based on available return data.
 
@@ -84,7 +84,7 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ### Widget Options
 
-<img src="../images/widgets/SCR-20250506-ujba.png" alt="Performance and Risk Metrics options" width="25%"/>
+<img src="../../images/widgets/SCR-20250506-ujba.png" alt="Performance and Risk Metrics options" width="25%"/>
 
 -**Benchmarks** - Compare performance metrics against selected benchmarks. Multiple selections allowed.
 -**Prinmary Benchmark** - The main benchmark used for comparison.
@@ -100,7 +100,7 @@ The data for this chart will be pre-calculated based on the provided return data
 
 ### Widget Options
 
-<img src="../images/widgets/SCR-20250507-bals.png" alt="Return Report options" width="25%"/>
+<img src="../../images/widgets/SCR-20250507-bals.png" alt="Return Report options" width="25%"/>
 
 - **Start, End Date** - Defines the time window used to calculate and display rolling period return statistics.
 
@@ -125,7 +125,7 @@ The data for this widget will be pre-calculated based on the provided return dat
 
 ### Widget Options
 
-<img src="../images/widgets/SCR-20250507-bfrp.png" alt="Return Statistics options" width="25%"/>
+<img src="../../images/widgets/SCR-20250507-bfrp.png" alt="Return Statistics options" width="25%"/>
 
 - **Start, End Date** - Defines the time window used to calculate and display rolling period return statistics.
 
@@ -801,7 +801,7 @@ def calculate_calmar_ratio(
 
 ### Widget Options
 
-<img src="../images/widgets/SCR-20250508-lliz.png" alt="Risk Statistics options" width="25%"/>
+<img src="../../images/widgets/SCR-20250508-lliz.png" alt="Risk Statistics options" width="25%"/>
 
 - **Primary Benchmark** - The main benchmark used for comparison.
 - **Start, End Date** - Defines the time window used to calculate and display rolling period return statistics.
@@ -813,7 +813,7 @@ A bar chart widget that decomposes returns into components attributable to Alpha
 
 #### Widget Options
 
-<img src="../images/widgets/SCR-20250513-bbud.png" alt="Risk Statistics options" width="25%"/>
+<img src="../../images/widgets/SCR-20250513-bbud.png" alt="Risk Statistics options" width="25%"/>
 
 - **Market** - Represents the portion of returns attributable to market movements, based on the selected benchmark.
 - **Start, End Date** - Defines the time period over which the return decomposition (Alpha, Market, Factor, Risk-Free) is calculated and displayed in the chart.
@@ -959,7 +959,7 @@ def calculate_tail_correlation(
 
 ### Widget Options
 
-<img src="../images/widgets/SCR-20250513-bvcy.png" alt="tail Correlation options" width="25%"/>
+<img src="../../images/widgets/SCR-20250513-bvcy.png" alt="tail Correlation options" width="25%"/>
 
 - **Primary Benchmark** - The main market benchmark used to attribute and compare components of the returns.
 - **Start, End Date** - Specifies the time window over which rolling period return statistics are calculated.
@@ -1031,7 +1031,7 @@ def calculate_worst_months(
 
 ### Widget Options
 
-<img src="../images/widgets/SCR-20250513-cfxl.png" alt="Worsst Months options" width="25%"/>
+<img src="../../images/widgets/SCR-20250513-cfxl.png" alt="Worsst Months options" width="25%"/>
 
 - **Benchmarks** - One or more market benchmarks used to compare and contextualize the returns.
 - **Start, End Date** - Specifies the time window over which monthly return statistics are aggregated and analyzed.
