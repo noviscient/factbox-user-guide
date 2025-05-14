@@ -516,7 +516,7 @@ def calculate_correlation(
 ### Tail Correlation (Market Index)
 Refers to the correlation between the extreme events or outliers of the returns and the market. The market will depend on the geography where the strategy is denominated and the market traded.
 
-**🧮 Formula**
+ **🧮 Formula**
 
 Tail Correlation measures the degree of co-movement between two return distributions in the tails — i.e., during extreme losses.
 
@@ -588,7 +588,7 @@ $$
 }
 $$
 
-🧪 Python Code Example
+### 🧪 Python Code Example
 
 ```python
 from typing import Callable
@@ -818,12 +818,12 @@ A bar chart widget that decomposes returns into components attributable to Alpha
 - **Market** - Represents the portion of returns attributable to market movements, based on the selected benchmark.
 - **Start, End Date** - Defines the time period over which the return decomposition (Alpha, Market, Factor, Risk-Free) is calculated and displayed in the chart.
 
-### Tail Correlation
+## Tail Correlation
 A measure of the aggregated tail correlation risk of the returns. Refers to the correlation between the extreme events or outliers of the strategy and the market. The market will depend on the geography where the strategy is denominated and the market traded.
 
 <img src="../../images/widgets/SCR-20250513-bufn.png" alt="Tail Correlation"/>
 
-**🧮 Formula**
+### 🧮 Formula
 
 **🔹 Step 1: Standardize the Returns**
 
@@ -895,7 +895,7 @@ $$
 
 This metric captures the **joint tail risk behavior** between the return's data and the market, going beyond traditional correlation by focusing on extreme downside events.
 
-🧪 Python Code Example
+### 🧪 Python Code Example
 
 ```python
 import numpy as np
