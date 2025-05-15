@@ -144,6 +144,8 @@ risk_expos, ret_attrs, risk_attrs = calculate_performance_attribution(
 
 Factor Return Attribution attributes excess returns to common risk factors using the Fama-French model. Factor exposures (betas) are estimated via linear regression, and return attribution is calculated accordingly.
 
+<img src="../../images/widgets/SCR-20250515-btqy.png" alt="Current Factor Exposures options" width="25%"/>
+
 ### 🧮 Formula
 
 ---
