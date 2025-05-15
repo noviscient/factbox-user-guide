@@ -144,7 +144,7 @@ risk_expos, ret_attrs, risk_attrs = calculate_performance_attribution(
 
 Factor Return Attribution attributes excess returns to common risk factors using the Fama-French model. Factor exposures (betas) are estimated via linear regression, and return attribution is calculated accordingly.
 
-<img src="../../images/widgets/SCR-20250515-btqy.png" alt="Current Factor Exposures options" width="25%"/>
+<img src="../../images/widgets/SCR-20250515-btqy.png" alt="Current Factor Return Attributions Chart"/>
 
 ### 🧮 Formula
 
@@ -269,8 +269,19 @@ risk_expos, ret_attrs, risk_attrs = calculate_performance_attribution(
 
 ## Current Factor Risk Attributions
 
+<img src="../../images/widgets/SCR-20250515-bumu.png" alt="Current Factor Risk Attributions Chart"/>
+
 ## Rolling Factor Exposures
+
+The rolling factor exposures are calculated using Fama-French Four-Factor Model, with one calendar year rolling window and one month frequency.
+Each time point in the graph represent the strength of the relationship between the returns of the strategy/product and each factor.
+
+<img src="../../images/widgets/SCR-20250515-bvfr.png" alt="Rolling Factor Exposures Chart"/>
 
 ## Rolling Factor Return Attributions
 
+<img src="../../images/widgets/SCR-20250515-bwbe.png" alt="Rolling Factor Return Attributions Chart"/>
+
 ## Rolling Factor Risk Attributions
+
+<img src="../../images/widgets/SCR-20250515-bwmq.png" alt="Rolling Factor Risk Attributions Chart"/>
